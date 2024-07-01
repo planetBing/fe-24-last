@@ -15,6 +15,7 @@ import {
 import debounce from "../utils/debounce";
 import Draggable from "./Dnd/Draggable";
 import Droppable, { OnDrop } from "./Dnd/Droppable";
+import Overlay from "./Overlay";
 
 interface ElementBoxProps {
   element: ElementType;
@@ -203,7 +204,10 @@ function ElementBox({
               {content}
             </ElementContent>
             {elementId === popupElementId && (
-              <BlockTypePopup onTypeChange={handleTypeChange} />
+              <>
+                <Overlay onClick={() => setPopupElementId(null)} />
+                <BlockTypePopup onTypeChange={handleTypeChange} />
+              </>
             )}
           </Element>
         )}

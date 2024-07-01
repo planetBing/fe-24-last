@@ -1,10 +1,7 @@
-import { useState } from "react";
 import { useQueryClient } from "react-query";
 import styled from "styled-components";
 import { Block } from "../model/types";
-import debounce from "../utils/debounce";
 import { useParams } from "react-router-dom";
-import { Article } from "../model/types";
 import ElementBox from "./ElementBox";
 import Droppable, { OnDrop } from "./Dnd/Droppable";
 import { useMoveElement } from "../hooks/api";
