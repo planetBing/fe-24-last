@@ -230,7 +230,7 @@ const IconWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  cursor: pointer;
+  /* cursor: pointer; */
   height: fit-content;
 
   ${Element}:hover & {
@@ -242,6 +242,7 @@ const ElementContent = styled.div<{ type: string }>`
   width: 100%;
   padding: 3px 2px;
   height: fit-content;
+  position: relative;
 
   ${({ type }) =>
     type === "bulletPoint" &&
