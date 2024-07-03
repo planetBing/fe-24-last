@@ -219,7 +219,6 @@ function ElementBox({
 const Element = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 8px;
   flex-basis: 0;
   position: relative;
   align-items: center;
@@ -240,7 +239,7 @@ const IconWrapper = styled.div`
 
 const ElementContent = styled.div<{ type: string }>`
   width: 100%;
-  padding: 3px 2px;
+  padding: 3px 4px;
   height: fit-content;
   position: relative;
 

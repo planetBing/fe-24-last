@@ -23,7 +23,7 @@ export default function Droppable({
   onDrop,
   allowedDirections,
   isDisabled,
-  threshold = 10,
+  threshold = 4,
   children,
 }: DroppableProps) {
   const { isDragging, draggingItemId, endDrag } = useDnd();

@@ -119,6 +119,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
+  padding: 4px;
   border: 1px solid red;
 
   > * {
