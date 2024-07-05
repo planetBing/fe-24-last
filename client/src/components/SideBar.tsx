@@ -1,12 +1,4 @@
-import { useState } from "react";
-import {
-  FormOutlined,
-  CheckOutlined,
-  MinusOutlined,
-  PlusOutlined,
-  RightOutlined,
-  DownOutlined,
-} from "@ant-design/icons";
+import { FormOutlined, CheckOutlined } from "@ant-design/icons";
 import {
   useCreateNewArticle,
   useDeleteArticle,
@@ -16,16 +8,13 @@ import * as S from "../styles/SideBar";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "react-query";
 import { Article } from "../model/types";
-import styled from "styled-components";
+import ArticleItem from "./SideBarArticleItem";
 
 export function SideBar() {
   const queryClient = useQueryClient();
   const { data: articlesData, isLoading, error } = useGetArticles();
   const { mutate: createNewArticle } = useCreateNewArticle(queryClient);
   const { mutate: deleteArticle } = useDeleteArticle(queryClient);
-  const [toggledDropdownId, setToggledDropdownId] = useState<string | null>(
-    null
-  );
   const navigate = useNavigate();
 
   const handleNewArticle = () => {
@@ -63,30 +52,16 @@ export function SideBar() {
         <S.MiddleBox>
           <div className="my-articles">개인 페이지</div>
           <S.Articles>
-            {articlesData.map((article: Article) => (
-              <S.SideBarArticleWrapper key={article._id}>
-                <ArticleLeftSide>
-                  {toggledDropdownId !== article._id ? (
-                    <RightOutlined
-                      onClick={() => setToggledDropdownId(article._id)}
-                    />
-                  ) : (
-                    <DownOutlined onClick={() => setToggledDropdownId(null)} />
-                  )}
-                  <S.ArticleTitleBox>
-                    <S.ArticleLink to={`/${article._id}`} state={article}>
-                      {article.title || "제목 없음"}
-                    </S.ArticleLink>
-                  </S.ArticleTitleBox>
-                </ArticleLeftSide>
-                <S.ArticleButtonBox>
-                  <MinusOutlined
-                    onClick={() => handleDeleteArticle(article._id)}
-                  />
-                  <PlusOutlined />
-                </S.ArticleButtonBox>
-              </S.SideBarArticleWrapper>
-            ))}
+            {articlesData
+              .filter((article: Article) => article.parent_id === "")
+              .map((article: Article) => (
+                <ArticleItem
+                  key={article._id}
+                  article={article}
+                  articlesData={articlesData}
+                  handleDeleteArticle={handleDeleteArticle}
+                />
+              ))}
           </S.Articles>
         </S.MiddleBox>
         <S.BottomBox>
@@ -99,14 +74,3 @@ export function SideBar() {
     </>
   );
 }
-
-const ArticleLeftSide = styled.div`
-  display: flex;
-
-  > span {
-    width: 12px;
-    margin-right: 8px;
-    cursor: pointer;
-    color: rgb(149, 149, 145);
-  }
-`;
