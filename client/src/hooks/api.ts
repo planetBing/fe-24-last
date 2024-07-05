@@ -9,6 +9,7 @@ import {
   postNewArticle,
   postNewBlockOrElement,
   patchElementIndex,
+  postNewChildArticle,
 } from "../services/api";
 import { ElementIndexInfo } from "../model/types";
 
@@ -30,6 +31,12 @@ export function useUpdateArticleTitle(id: string, queryClient: QueryClient) {
 
 export function useCreateNewArticle(queryClient: QueryClient) {
   return useMutation(postNewArticle, {
+    onSuccess: () => queryClient.invalidateQueries(["articles"]),
+  });
+}
+
+export function useCreateNewChildArticle(queryClient: QueryClient) {
+  return useMutation((parent_id: string) => postNewChildArticle(parent_id), {
     onSuccess: () => queryClient.invalidateQueries(["articles"]),
   });
 }
