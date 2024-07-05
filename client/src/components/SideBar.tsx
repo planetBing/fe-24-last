@@ -1,8 +1,11 @@
+import { useState } from "react";
 import {
   FormOutlined,
   CheckOutlined,
   MinusOutlined,
   PlusOutlined,
+  RightOutlined,
+  DownOutlined,
 } from "@ant-design/icons";
 import {
   useCreateNewArticle,
@@ -13,12 +16,14 @@ import * as S from "../styles/SideBar";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "react-query";
 import { Article } from "../model/types";
+import styled from "styled-components";
 
 export function SideBar() {
   const queryClient = useQueryClient();
   const { data: articlesData, isLoading, error } = useGetArticles();
   const { mutate: createNewArticle } = useCreateNewArticle(queryClient);
   const { mutate: deleteArticle } = useDeleteArticle(queryClient);
+  const [toggleDropdown, setToggleDropdown] = useState<Boolean>(false);
   const navigate = useNavigate();
 
   const handleNewArticle = () => {
@@ -58,11 +63,23 @@ export function SideBar() {
           <S.Articles>
             {articlesData.map((article: Article) => (
               <S.SideBarArticleWrapper key={article._id}>
-                <S.ArticleTitleBox>
-                  <S.ArticleLink to={`/${article._id}`} state={article}>
-                    {article.title || "제목 없음"}
-                  </S.ArticleLink>
-                </S.ArticleTitleBox>
+                <ArticleLeftSide>
+                  {!toggleDropdown && (
+                    <RightOutlined
+                      onClick={() => setToggleDropdown(!toggleDropdown)}
+                    />
+                  )}
+                  {toggleDropdown && (
+                    <DownOutlined
+                      onClick={() => setToggleDropdown(!toggleDropdown)}
+                    />
+                  )}
+                  <S.ArticleTitleBox>
+                    <S.ArticleLink to={`/${article._id}`} state={article}>
+                      {article.title || "제목 없음"}
+                    </S.ArticleLink>
+                  </S.ArticleTitleBox>
+                </ArticleLeftSide>
                 <S.ArticleButtonBox>
                   <MinusOutlined
                     onClick={() => handleDeleteArticle(article._id)}
@@ -83,3 +100,14 @@ export function SideBar() {
     </>
   );
 }
+
+const ArticleLeftSide = styled.div`
+  display: flex;
+
+  > span {
+    width: 12px;
+    margin-right: 8px;
+    cursor: pointer;
+    color: rgb(149, 149, 145);
+  }
+`;

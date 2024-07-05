@@ -78,6 +78,7 @@ export const ArticleLink = styled(Link)`
   color: rgb(103, 102, 98);
   text-decoration: unset;
   font-weight: 500;
+  font-size: 15px;
 `;
 
 export const ArticleButtonBox = styled.div`
@@ -87,6 +88,8 @@ export const ArticleButtonBox = styled.div`
   & span {
     cursor: pointer;
     width: 15px;
+    color: rgb(149, 149, 145);
+    width: 12px;
   }
 `;
 
