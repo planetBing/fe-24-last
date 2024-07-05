@@ -15,6 +15,7 @@ import {
 import debounce from "../utils/debounce";
 import Draggable from "./Dnd/Draggable";
 import Droppable, { OnDrop } from "./Dnd/Droppable";
+import Overlay from "./Overlay";
 
 interface ElementBoxProps {
   element: ElementType;
@@ -203,7 +204,10 @@ function ElementBox({
               {content}
             </ElementContent>
             {elementId === popupElementId && (
-              <BlockTypePopup onTypeChange={handleTypeChange} />
+              <>
+                <Overlay onClick={() => setPopupElementId(null)} />
+                <BlockTypePopup onTypeChange={handleTypeChange} />
+              </>
             )}
           </Element>
         )}
@@ -215,7 +219,6 @@ function ElementBox({
 const Element = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 8px;
   flex-basis: 0;
   position: relative;
   align-items: center;
@@ -226,7 +229,7 @@ const IconWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  cursor: pointer;
+  /* cursor: pointer; */
   height: fit-content;
 
   ${Element}:hover & {
@@ -236,8 +239,9 @@ const IconWrapper = styled.div`
 
 const ElementContent = styled.div<{ type: string }>`
   width: 100%;
-  padding: 3px 2px;
+  padding: 3px 4px;
   height: fit-content;
+  position: relative;
 
   ${({ type }) =>
     type === "bulletPoint" &&
