@@ -64,6 +64,30 @@ export async function postNewArticle() {
   return response.json();
 }
 
+export async function postNewChildArticle(parent_id: string) {
+  const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/articles`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      title: "",
+      blockList: [
+        {
+          columnList: [[{ type: "text", content: "" }]],
+        },
+      ],
+      parent_id: parent_id,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to create a new article");
+  }
+
+  return response.json();
+}
+
 export async function deleteArticle(articleId: string) {
   const response = await fetch(
     `${import.meta.env.VITE_SERVER_URL}/articles/${articleId}`,
