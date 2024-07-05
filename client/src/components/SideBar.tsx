@@ -23,7 +23,9 @@ export function SideBar() {
   const { data: articlesData, isLoading, error } = useGetArticles();
   const { mutate: createNewArticle } = useCreateNewArticle(queryClient);
   const { mutate: deleteArticle } = useDeleteArticle(queryClient);
-  const [toggleDropdown, setToggleDropdown] = useState<Boolean>(false);
+  const [toggledDropdownId, setToggledDropdownId] = useState<string | null>(
+    null
+  );
   const navigate = useNavigate();
 
   const handleNewArticle = () => {
@@ -64,15 +66,12 @@ export function SideBar() {
             {articlesData.map((article: Article) => (
               <S.SideBarArticleWrapper key={article._id}>
                 <ArticleLeftSide>
-                  {!toggleDropdown && (
+                  {toggledDropdownId !== article._id ? (
                     <RightOutlined
-                      onClick={() => setToggleDropdown(!toggleDropdown)}
+                      onClick={() => setToggledDropdownId(article._id)}
                     />
-                  )}
-                  {toggleDropdown && (
-                    <DownOutlined
-                      onClick={() => setToggleDropdown(!toggleDropdown)}
-                    />
+                  ) : (
+                    <DownOutlined onClick={() => setToggledDropdownId(null)} />
                   )}
                   <S.ArticleTitleBox>
                     <S.ArticleLink to={`/${article._id}`} state={article}>
