@@ -1,6 +1,10 @@
 import express from "express";
 import { ArticlesModel } from "../model/index.js";
-import { getArticleById, saveArticle } from "../service/article.js";
+import {
+  getArticleById,
+  saveArticle,
+  deleteArticleAndChildren,
+} from "../service/article.js";
 import {
   addBlock,
   addElement,
@@ -85,13 +89,9 @@ router.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const deletedArticle = await ArticlesModel.findByIdAndDelete(id);
-    if (!deletedArticle) {
-      return res.status(404).json({ message: "Article not found" });
-    }
-    res
-      .status(200)
-      .json({ message: "Article deleted successfully", data: deletedArticle });
+    await deleteArticleAndChildren(id);
+
+    res.status(200).json({ message: "Article deleted successfully" });
   } catch (error) {
     if (error instanceof Error) {
       res.status(500).json({ message: error.message });

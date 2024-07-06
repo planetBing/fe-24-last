@@ -107,7 +107,7 @@ export default function Droppable({
   ]);
 
   const borderColor = (dir: string) =>
-    highlight === dir ? "2px solid red" : "2px solid transparent";
+    highlight === dir ? "2px solid red" : "0px solid transparent";
 
   return (
     <div
