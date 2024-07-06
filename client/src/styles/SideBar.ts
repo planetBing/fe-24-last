@@ -115,3 +115,15 @@ export const SideBarArticleWrapper = styled.div`
     display: flex;
   }
 `;
+
+export const ArticleLeftSide = styled.div<{ depth: number }>`
+  display: flex;
+  padding-left: ${(props) => props.depth * 8}px;
+
+  > span {
+    width: 12px;
+    margin-right: 8px;
+    cursor: pointer;
+    color: rgb(149, 149, 145);
+  }
+`;
