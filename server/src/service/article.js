@@ -10,6 +10,15 @@ export async function getArticleById(articleId) {
   return article.toObject();
 }
 
+export async function deleteArticleAndChildren(articleId) {
+  await ArticlesModel.findByIdAndDelete(articleId);
+
+  const children = await ArticlesModel.find({ parent_id: articleId });
+  for (const child of children) {
+    await deleteArticleAndChildren(child._id);
+  }
+}
+
 export async function saveArticle(article) {
   await ArticlesModel.findByIdAndUpdate(article._id, article).exec();
 }
