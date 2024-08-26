@@ -29,7 +29,12 @@ export default function DndProvider({ children }: DndProviderProps) {
 
   return (
     <DndContext.Provider
-      value={{ isDragging, draggingItemId, startDrag, endDrag }}
+      value={{
+        isDragging,
+        draggingItemId,
+        startDrag,
+        endDrag,
+      }}
     >
       {children}
     </DndContext.Provider>
