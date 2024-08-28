@@ -185,7 +185,7 @@ function ElementBox({
       onDrop={handleElementDrop}
       isDisabled={isSolo}
       allowedDirections={elementIndex === 0 ? ["TOP", "BOTTOM"] : ["BOTTOM"]}
-      threshold={2}
+      threshold={3}
     >
       <Draggable id={`${blockIndex}-${columnIndex}-${elementIndex}`}>
         {(provided) => (
@@ -240,7 +240,7 @@ const IconWrapper = styled.div`
 
 const ElementContent = styled.div<{ type: string }>`
   width: 100%;
-  padding: 3px 4px;
+  padding: 4px;
   height: fit-content;
   position: relative;
 

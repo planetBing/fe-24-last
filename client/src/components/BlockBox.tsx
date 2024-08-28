@@ -119,7 +119,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  padding: 4px;
+  padding: 6px;
 
   > * {
     flex: 1;
