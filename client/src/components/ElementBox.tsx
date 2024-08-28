@@ -185,6 +185,7 @@ function ElementBox({
       onDrop={handleElementDrop}
       isDisabled={isSolo}
       allowedDirections={elementIndex === 0 ? ["TOP", "BOTTOM"] : ["BOTTOM"]}
+      threshold={2}
     >
       <Draggable id={`${blockIndex}-${columnIndex}-${elementIndex}`}>
         {(provided) => (
