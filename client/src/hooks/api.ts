@@ -12,6 +12,7 @@ import {
   postNewChildArticle,
 } from "../services/api";
 import { ElementIndexInfo } from "../model/types";
+import { useNavigate } from "react-router-dom";
 
 export function useGetArticles() {
   return useQuery("articles", getArticles);
@@ -30,8 +31,12 @@ export function useUpdateArticleTitle(id: string, queryClient: QueryClient) {
 }
 
 export function useCreateNewArticle(queryClient: QueryClient) {
+  const navigate = useNavigate();
   return useMutation(postNewArticle, {
-    onSuccess: () => queryClient.invalidateQueries(["articles"]),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(["articles"]);
+      navigate(`/${data.data._id}`);
+    },
   });
 }
 
